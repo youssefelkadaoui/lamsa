@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شكراً لطلبك | لمسة أناقة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="confirmation-page">
+  <main class="confirmation-shell">
+    <section class="confirmation-card" aria-labelledby="thankYouTitle">
+      <div class="confirmation-mark">✓</div>
+      <p class="hero-kicker">تم استلام طلبك</p>
+      <h1 id="thankYouTitle">شكراً لثقتك بنا!</h1>
+      <p class="confirmation-message">تم استلام طلبك بنجاح، وسيتواصل معك ممثل من فريقنا خلال وقت قصير لتأكيد العنوان وتفاصيل الشحن.</p>
+      <div class="confirmation-trust"><span>توصيل مجاني في المغرب</span><span>الدفع عند الاستلام</span><span>ضمان الجودة</span><span>توصيل خلال 24-48 ساعة</span></div>
+      <div class="order-summary">
+        <div class="summary-heading"><h2>ملخص الطلب</h2><span id="orderDate"></span></div>
+        <div id="summaryItems"></div>
+        <div class="summary-total"><span>المجموع</span><strong id="summaryTotal">0.00 درهم</strong></div>
+      </div>
+      <a class="btn btn-wa btn-block" href="https://wa.me/212706760806?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D9%84%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D8%A7%D8%AC%D9%84%20%D8%AD%D9%88%D9%84%20%D8%B7%D9%84%D8%A8%D9%8A." target="_blank" rel="noopener">تواصل مع الدعم عبر واتساب</a>
+      <a class="back-to-shop" href="index.html">متابعة التصفّح</a>
+    </section>
+  </main>
+  <script>
+    const order = JSON.parse(localStorage.getItem('lamssa_last_order_v1') || 'null');
+    const items = document.getElementById('summaryItems');
+    if (!order) {
+      items.innerHTML = '<p class="summary-empty">لم تعد تفاصيل طلبك متاحة على هذا الجهاز.</p>';
+    } else {
+      items.innerHTML = (order.items || []).map(item => '<div class="summary-item"><span>' + item.name + ' × ' + item.quantity + '</span><strong>' + Number(item.price).toFixed(2) + ' درهم</strong></div>').join('');
+      document.getElementById('summaryTotal').textContent = order.total || '0.00 درهم';
+      document.getElementById('orderDate').textContent = new Date(order.createdAt).toLocaleDateString();
+    }
+  </script>
+</body>
+</html>
